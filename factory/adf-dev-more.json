@@ -1,0 +1,9 @@
+{
+	"name": "adf-dev-more",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "536f0e40-89e7-44e3-904d-3a955d3c9d0a",
+		"tenantId": "20b478ed-20f0-470d-929c-cd926aa8c3e8"
+	}
+}

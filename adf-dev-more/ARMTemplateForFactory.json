@@ -191,9 +191,6 @@
 							"name": "derivedColumn1"
 						},
 						{
-							"name": "alterRow1"
-						},
-						{
 							"name": "filter1"
 						},
 						{
@@ -215,8 +212,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> dfSource",
 						"dfSource derive(name_new = iif(regexMatch(name, '[0-9]'), 1, 0)) ~> derivedColumn1",
-						"derivedColumn1 alterRow(deleteIf(name_new == 1)) ~> alterRow1",
-						"alterRow1 filter(toInteger(airline_id) >= 0 && isNull(airline_id) != true() && isNull(name) != true() && isNull(iata) != true() && isNull(icao) != true() && iata != '-' && icao != 'N/A' && length(iata) == 2 && length(icao) == 3 && rlike(iata,'[a-zA-Z]') && rlike(icao,'[a-zA-Z]') && name_new != 1) ~> filter1",
+						"derivedColumn1 filter(toInteger(airline_id) >= 0 && isNull(airline_id) != true() && isNull(name) != true() && isNull(iata) != true() && isNull(icao) != true() && iata != '-' && icao != 'N/A' && length(iata) == 2 && length(icao) == 3 && rlike(iata,'[a-zA-Z]') && rlike(icao,'[a-zA-Z]') && name_new != 1) ~> filter1",
 						"filter1 select(mapColumn(",
 						"          airline_id,",
 						"          name,",

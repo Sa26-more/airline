@@ -127,9 +127,7 @@
 					},
 					{
 						"name": "price",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
+						"type": "varchar"
 					},
 					{
 						"name": "brand",
@@ -153,19 +151,15 @@
 					},
 					{
 						"name": "size",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					},
 					{
 						"name": "rating",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
+						"type": "varchar"
 					},
 					{
 						"name": "noofratings",
-						"type": "int",
-						"precision": 10
+						"type": "varchar"
 					}
 				],
 				"typeProperties": {
@@ -582,15 +576,15 @@
 						"          category as string,",
 						"          subcategory as string,",
 						"          title_href as string,",
-						"          price as decimal(18,0),",
+						"          price as string,",
 						"          brand as string,",
 						"          ingredients as string,",
 						"          form as string,",
 						"          type as string,",
 						"          color as string,",
-						"          size as integer,",
-						"          rating as decimal(18,0),",
-						"          noofratings as integer",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",

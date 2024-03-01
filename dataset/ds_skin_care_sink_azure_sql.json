@@ -1,0 +1,16 @@
+{
+	"name": "ds_skin_care_sink_azure_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_azure_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SKIN_CARE"
+		}
+	}
+}

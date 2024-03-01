@@ -34,7 +34,9 @@
 			},
 			{
 				"name": "price",
-				"type": "varchar"
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
 			},
 			{
 				"name": "brand",
@@ -58,7 +60,8 @@
 			},
 			{
 				"name": "size",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "rating",

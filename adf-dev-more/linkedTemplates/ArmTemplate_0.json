@@ -78,7 +78,74 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rating",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "noofratings",
+						"type": "int",
+						"precision": 10
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "COSMETIC_DUMP"
@@ -460,6 +527,23 @@
 						"     errorHandlingOption: 'stopOnFirstError') ~> cosmeticSink",
 						"split1@CosmeticDump sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as decimal(18,0),",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as integer,",
+						"          rating as decimal(18,0),",
+						"          noofratings as integer",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",

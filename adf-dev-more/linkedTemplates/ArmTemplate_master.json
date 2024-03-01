@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-dev-more"
 		},
+		"ls_azure_sql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_azure_sql'"
+		},
 		"ls_blob_storage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_blob_storage'"
@@ -37,6 +41,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_azure_sql_connectionString": {
+						"value": "[parameters('ls_azure_sql_connectionString')]"
 					},
 					"ls_blob_storage_connectionString": {
 						"value": "[parameters('ls_blob_storage_connectionString')]"

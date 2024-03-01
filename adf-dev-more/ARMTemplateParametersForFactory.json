@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adf-dev-more"
 		},
+		"ls_azure_sql_connectionString": {
+			"value": ""
+		},
 		"ls_blob_storage_connectionString": {
 			"value": ""
 		}

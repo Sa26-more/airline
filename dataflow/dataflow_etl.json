@@ -1,0 +1,99 @@
+{
+	"name": "dataflow_etl",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_source",
+						"type": "DatasetReference"
+					},
+					"name": "sourceCosmetic"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_cosmetic_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "cosmeticSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_cosmetic_dump_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "cosmeticDumpSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          product_name as string,",
+				"          website as string,",
+				"          country as string,",
+				"          category as string,",
+				"          subcategory as string,",
+				"          title_href as string,",
+				"          price as string,",
+				"          brand as string,",
+				"          ingredients as string,",
+				"          form as string,",
+				"          type as string,",
+				"          color as string,",
+				"          size as string,",
+				"          rating as string,",
+				"          noofratings as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceCosmetic",
+				"sourceCosmetic split(not(isNull(product_name) || isNull(website) || isNull(country) || isNull(category) || isNull(subcategory) || isNull(title_href) || isNull(price) || isNull(brand) || isNull(ingredients) || isNull(form) || isNull(rating) || isNull(noofratings)),",
+				"     disjoint: false) ~> split1@(Cosmetic, CosmeticDump)",
+				"split1@Cosmetic sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          product_name as string,",
+				"          website as string,",
+				"          country as string,",
+				"          category as string,",
+				"          subcategory as string,",
+				"          title_href as string,",
+				"          price as decimal(18,0),",
+				"          brand as string,",
+				"          ingredients as string,",
+				"          form as string,",
+				"          type as string,",
+				"          color as string,",
+				"          size as integer,",
+				"          rating as decimal(18,0),",
+				"          noofratings as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> cosmeticSink",
+				"split1@CosmeticDump sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> cosmeticDumpSink"
+			]
+		}
+	}
+}

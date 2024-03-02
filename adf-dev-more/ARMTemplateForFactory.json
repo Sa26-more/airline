@@ -46,12 +46,12 @@
 								"datasetParameters": {
 									"sourceCosmetic": {},
 									"sinkBody": {},
-									"sinkEyes": {},
-									"sinkFace": {},
 									"sinkSkinCare": {},
 									"sinkHair": {},
 									"sinkLips": {},
-									"sinkOther": {}
+									"sinkOther": {},
+									"sinkEyes": {},
+									"sinkFace": {}
 								}
 							},
 							"staging": {},
@@ -704,20 +704,6 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "ds_eyes_sink_azure_sql",
-								"type": "DatasetReference"
-							},
-							"name": "sinkEyes"
-						},
-						{
-							"dataset": {
-								"referenceName": "ds_face_sink_azure_sql",
-								"type": "DatasetReference"
-							},
-							"name": "sinkFace"
-						},
-						{
-							"dataset": {
 								"referenceName": "ds_skin_care_sink_azure_sql",
 								"type": "DatasetReference"
 							},
@@ -743,11 +729,43 @@
 								"type": "DatasetReference"
 							},
 							"name": "sinkOther"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_eyes_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkEyes"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_face_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkFace"
 						}
 					],
 					"transformations": [
 						{
 							"name": "splitSubcategory"
+						},
+						{
+							"name": "alterRow1"
+						},
+						{
+							"name": "alterRow2"
+						},
+						{
+							"name": "alterRow3"
+						},
+						{
+							"name": "alterRow4"
+						},
+						{
+							"name": "filterEyes"
+						},
+						{
+							"name": "filterFace"
 						}
 					],
 					"scriptLines": [
@@ -773,84 +791,58 @@
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> sourceCosmetic",
 						"sourceCosmetic split(like(category, 'body%'),",
-						"     like(category, 'eyes%'),",
-						"     like(category,'face%'),",
 						"     like(category, 'skin%'),",
 						"     like(category, 'hair%'),",
 						"     like(category, 'lips%'),",
-						"     disjoint: false) ~> splitSubcategory@(body, eyes, face, skincare, hair, lips, other)",
-						"splitSubcategory@body sink(allowSchemaDrift: true,",
+						"     disjoint: false) ~> splitSubcategory@(body, skincare, hair, lips, other)",
+						"splitSubcategory@body alterRow(updateIf(true())) ~> alterRow1",
+						"splitSubcategory@skincare alterRow(updateIf(true())) ~> alterRow2",
+						"splitSubcategory@hair alterRow(updateIf(true())) ~> alterRow3",
+						"splitSubcategory@lips alterRow(updateIf(true())) ~> alterRow4",
+						"sourceCosmetic filter(like(trim(toString(subcategory)), 'eye%') || like(trim(toString(subcategory)), 'mascara%') || like(trim(toString(subcategory)), 'serum%')) ~> filterEyes",
+						"sourceCosmetic filter(regexMatch(subcategory, 'blush,concealer') || regexMatch(subcategory,'eye treatment') || regexMatch(subcategory,'face oil') || regexMatch(subcategory,'foundation') || regexMatch(subcategory,'highlighter') || regexMatch(subcategory, 'powder') || regexMatch(subcategory,'primer')) ~> filterFace",
+						"alterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     preSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
 						"     postSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkBody",
-						"splitSubcategory@eyes sink(allowSchemaDrift: true,",
+						"alterRow2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     preSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
-						"     postSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
-						"splitSubcategory@face sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     preSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
-						"     postSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sinkFace",
-						"splitSubcategory@skincare sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     preSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
 						"     postSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkSkinCare",
-						"splitSubcategory@hair sink(allowSchemaDrift: true,",
+						"alterRow3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     preSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
 						"     postSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkHair",
-						"splitSubcategory@lips sink(allowSchemaDrift: true,",
+						"alterRow4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     preSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
 						"     postSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
@@ -870,19 +862,39 @@
 						"          active as string",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkOther"
+						"     skipDuplicateMapOutputs: true) ~> sinkOther",
+						"filterEyes sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
+						"filterFace sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkFace"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_cosmetic_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_body_sink_azure_sql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_eyes_sink_azure_sql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_face_sink_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_skin_care_sink_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_hair_sink_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_lips_sink_azure_sql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_other_sink')]"
+				"[concat(variables('factoryId'), '/datasets/ds_other_sink')]",
+				"[concat(variables('factoryId'), '/datasets/ds_eyes_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_face_sink_azure_sql')]"
 			]
 		},
 		{

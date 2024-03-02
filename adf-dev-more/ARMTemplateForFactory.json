@@ -49,9 +49,7 @@
 									"sinkSkinCare": {},
 									"sinkHair": {},
 									"sinkLips": {},
-									"sinkOther": {},
-									"sinkEyes": {},
-									"sinkFace": {}
+									"sinkOther": {}
 								}
 							},
 							"staging": {},
@@ -1095,20 +1093,6 @@
 								"type": "DatasetReference"
 							},
 							"name": "sinkOther"
-						},
-						{
-							"dataset": {
-								"referenceName": "ds_eyes_sink_azure_sql",
-								"type": "DatasetReference"
-							},
-							"name": "sinkEyes"
-						},
-						{
-							"dataset": {
-								"referenceName": "ds_face_sink_azure_sql",
-								"type": "DatasetReference"
-							},
-							"name": "sinkFace"
 						}
 					],
 					"transformations": [
@@ -1126,12 +1110,6 @@
 						},
 						{
 							"name": "alterRow4"
-						},
-						{
-							"name": "filterEyes"
-						},
-						{
-							"name": "filterFace"
 						}
 					],
 					"scriptLines": [
@@ -1165,8 +1143,6 @@
 						"splitSubcategory@skincare alterRow(insertIf(true())) ~> alterRow2",
 						"splitSubcategory@hair alterRow(insertIf(true())) ~> alterRow3",
 						"splitSubcategory@lips alterRow(insertIf(true())) ~> alterRow4",
-						"sourceCosmetic filter(like(trim(toString(subcategory)), 'eye%') || like(trim(toString(subcategory)), 'mascara%') || like(trim(toString(subcategory)), 'serum%')) ~> filterEyes",
-						"sourceCosmetic filter(regexMatch(subcategory, 'blush') || regexMatch(subcategory, 'concealer') || regexMatch(subcategory,'eye treatment') || regexMatch(subcategory,'face oil') || regexMatch(subcategory,'foundation') || regexMatch(subcategory,'highlighter') || regexMatch(subcategory, 'powder') || regexMatch(subcategory,'primer')) ~> filterFace",
 						"alterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -1300,63 +1276,7 @@
 						"          active as string",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkOther",
-						"filterEyes sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          product_name as string,",
-						"          website as string,",
-						"          country as string,",
-						"          category as string,",
-						"          subcategory as string,",
-						"          title_href as string,",
-						"          price as string,",
-						"          brand as string,",
-						"          ingredients as string,",
-						"          form as string,",
-						"          type as string,",
-						"          color as string,",
-						"          size as string,",
-						"          rating as string,",
-						"          noofratings as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
-						"filterFace sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          product_name as string,",
-						"          website as string,",
-						"          country as string,",
-						"          category as string,",
-						"          subcategory as string,",
-						"          title_href as string,",
-						"          price as string,",
-						"          brand as string,",
-						"          ingredients as string,",
-						"          form as string,",
-						"          type as string,",
-						"          color as string,",
-						"          size as string,",
-						"          rating as string,",
-						"          noofratings as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sinkFace"
+						"     skipDuplicateMapOutputs: true) ~> sinkOther"
 					]
 				}
 			},
@@ -1366,9 +1286,7 @@
 				"[concat(variables('factoryId'), '/datasets/ds_skin_care_sink_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_hair_sink_azure_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_lips_sink_azure_sql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_other_sink')]",
-				"[concat(variables('factoryId'), '/datasets/ds_eyes_sink_azure_sql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_face_sink_azure_sql')]"
+				"[concat(variables('factoryId'), '/datasets/ds_other_sink')]"
 			]
 		},
 		{

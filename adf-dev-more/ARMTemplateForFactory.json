@@ -21,6 +21,58 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_datamarts')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_datamart",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_datamart",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceCosmetic": {},
+									"sinkBody": {},
+									"sinkEyes": {},
+									"sinkFace": {},
+									"sinkSkinCare": {},
+									"sinkHair": {},
+									"sinkLips": {},
+									"sinkOther": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow_datamart')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_e_commerce_etl')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -344,6 +396,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_other_sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_blob_storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "adf-practice"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "airline_id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "alias",
+						"type": "String"
+					},
+					{
+						"name": "iata",
+						"type": "String"
+					},
+					{
+						"name": "icao",
+						"type": "String"
+					},
+					{
+						"name": "callsign",
+						"type": "String"
+					},
+					{
+						"name": "country",
+						"type": "String"
+					},
+					{
+						"name": "active",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_blob_storage')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_skin_care_sink_azure_sql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -455,6 +568,91 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_source_cosmetic_azure_sql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_azure_sql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "COSMETIC"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_azure_sql')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ls_azure_sql')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -479,6 +677,208 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_datamart')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_source_cosmetic_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sourceCosmetic"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_body_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkBody"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_eyes_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkEyes"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_face_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkFace"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_skin_care_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkSkinCare"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_hair_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkHair"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_lips_sink_azure_sql",
+								"type": "DatasetReference"
+							},
+							"name": "sinkLips"
+						},
+						{
+							"dataset": {
+								"referenceName": "ds_other_sink",
+								"type": "DatasetReference"
+							},
+							"name": "sinkOther"
+						}
+					],
+					"transformations": [
+						{
+							"name": "splitSubcategory"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as decimal(18,0),",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as integer,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> sourceCosmetic",
+						"sourceCosmetic split(like(category, 'body%'),",
+						"     like(category, 'eyes%'),",
+						"     like(category,'face%'),",
+						"     like(category, 'skin%'),",
+						"     like(category, 'hair%'),",
+						"     like(category, 'lips%'),",
+						"     disjoint: false) ~> splitSubcategory@(body, eyes, face, skincare, hair, lips, other)",
+						"splitSubcategory@body sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkBody",
+						"splitSubcategory@eyes sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
+						"splitSubcategory@face sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkFace",
+						"splitSubcategory@skincare sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkSkinCare",
+						"splitSubcategory@hair sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkHair",
+						"splitSubcategory@lips sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
+						"     postSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sinkLips",
+						"splitSubcategory@other sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          airline_id as string,",
+						"          name as string,",
+						"          alias as string,",
+						"          iata as string,",
+						"          icao as string,",
+						"          callsign as string,",
+						"          country as string,",
+						"          active as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkOther"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_cosmetic_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_body_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_eyes_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_face_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_skin_care_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_hair_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_lips_sink_azure_sql')]",
+				"[concat(variables('factoryId'), '/datasets/ds_other_sink')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow_etl')]",

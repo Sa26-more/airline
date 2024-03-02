@@ -1,0 +1,190 @@
+{
+	"name": "dataflow_datamart",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_source_cosmetic_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sourceCosmetic"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_body_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkBody"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_eyes_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkEyes"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_face_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkFace"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_skin_care_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkSkinCare"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_hair_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkHair"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_lips_sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sinkLips"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_other_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sinkOther"
+				}
+			],
+			"transformations": [
+				{
+					"name": "splitSubcategory"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          product_name as string,",
+				"          website as string,",
+				"          country as string,",
+				"          category as string,",
+				"          subcategory as string,",
+				"          title_href as string,",
+				"          price as decimal(18,0),",
+				"          brand as string,",
+				"          ingredients as string,",
+				"          form as string,",
+				"          type as string,",
+				"          color as string,",
+				"          size as integer,",
+				"          rating as string,",
+				"          noofratings as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> sourceCosmetic",
+				"sourceCosmetic split(like(category, 'body%'),",
+				"     like(category, 'eyes%'),",
+				"     like(category,'face%'),",
+				"     like(category, 'skin%'),",
+				"     like(category, 'hair%'),",
+				"     like(category, 'lips%'),",
+				"     disjoint: false) ~> splitSubcategory@(body, eyes, face, skincare, hair, lips, other)",
+				"splitSubcategory@body sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.BODY;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkBody",
+				"splitSubcategory@eyes sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.EYES;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
+				"splitSubcategory@face sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.FACE;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkFace",
+				"splitSubcategory@skincare sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.SKIN_CARE;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkSkinCare",
+				"splitSubcategory@hair sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.HAIR;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkHair",
+				"splitSubcategory@lips sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     preSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
+				"     postSQLs:['SELECT COUNT(*) FROM dbo.LIPS;'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkLips",
+				"splitSubcategory@other sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          airline_id as string,",
+				"          name as string,",
+				"          alias as string,",
+				"          iata as string,",
+				"          icao as string,",
+				"          callsign as string,",
+				"          country as string,",
+				"          active as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkOther"
+			]
+		}
+	}
+}

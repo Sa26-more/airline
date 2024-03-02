@@ -1,0 +1,80 @@
+{
+	"name": "ds_source_cosmetic_azure_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_azure_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "product_name",
+				"type": "varchar"
+			},
+			{
+				"name": "website",
+				"type": "varchar"
+			},
+			{
+				"name": "country",
+				"type": "varchar"
+			},
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "subcategory",
+				"type": "varchar"
+			},
+			{
+				"name": "title_href",
+				"type": "varchar"
+			},
+			{
+				"name": "price",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "brand",
+				"type": "varchar"
+			},
+			{
+				"name": "ingredients",
+				"type": "varchar"
+			},
+			{
+				"name": "form",
+				"type": "varchar"
+			},
+			{
+				"name": "type",
+				"type": "varchar"
+			},
+			{
+				"name": "color",
+				"type": "varchar"
+			},
+			{
+				"name": "size",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rating",
+				"type": "varchar"
+			},
+			{
+				"name": "noofratings",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "COSMETIC"
+		}
+	}
+}

@@ -131,7 +131,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "BODY"
@@ -322,7 +383,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "EYES"
@@ -343,7 +465,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FACE"
@@ -364,7 +547,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "HAIR"
@@ -385,7 +629,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "LIPS"
@@ -467,7 +772,68 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "product_name",
+						"type": "varchar"
+					},
+					{
+						"name": "website",
+						"type": "varchar"
+					},
+					{
+						"name": "country",
+						"type": "varchar"
+					},
+					{
+						"name": "category",
+						"type": "varchar"
+					},
+					{
+						"name": "subcategory",
+						"type": "varchar"
+					},
+					{
+						"name": "title_href",
+						"type": "varchar"
+					},
+					{
+						"name": "price",
+						"type": "varchar"
+					},
+					{
+						"name": "brand",
+						"type": "varchar"
+					},
+					{
+						"name": "ingredients",
+						"type": "varchar"
+					},
+					{
+						"name": "form",
+						"type": "varchar"
+					},
+					{
+						"name": "type",
+						"type": "varchar"
+					},
+					{
+						"name": "color",
+						"type": "varchar"
+					},
+					{
+						"name": "size",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "varchar"
+					},
+					{
+						"name": "noofratings",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "SKIN_CARE"
@@ -803,6 +1169,23 @@
 						"sourceCosmetic filter(regexMatch(subcategory, 'blush,concealer') || regexMatch(subcategory,'eye treatment') || regexMatch(subcategory,'face oil') || regexMatch(subcategory,'foundation') || regexMatch(subcategory,'highlighter') || regexMatch(subcategory, 'powder') || regexMatch(subcategory,'primer')) ~> filterFace",
 						"alterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -815,6 +1198,23 @@
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkBody",
 						"alterRow2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -827,6 +1227,23 @@
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkSkinCare",
 						"alterRow3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -839,6 +1256,23 @@
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkHair",
 						"alterRow4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -865,6 +1299,23 @@
 						"     skipDuplicateMapOutputs: true) ~> sinkOther",
 						"filterEyes sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -875,6 +1326,23 @@
 						"     errorHandlingOption: 'stopOnFirstError') ~> sinkEyes",
 						"filterFace sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          product_name as string,",
+						"          website as string,",
+						"          country as string,",
+						"          category as string,",
+						"          subcategory as string,",
+						"          title_href as string,",
+						"          price as string,",
+						"          brand as string,",
+						"          ingredients as string,",
+						"          form as string,",
+						"          type as string,",
+						"          color as string,",
+						"          size as string,",
+						"          rating as string,",
+						"          noofratings as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
